@@ -2,35 +2,34 @@ import React from "react";
 import moment from "moment";
 import { SingleDatePicker } from "react-dates";
 
-const now = moment();
-console.log(now.format("MMM Do, YYYY"));
-
 export default class ExpenseForm extends React.Component {
   constructor(props) {
-    super(props);
+    super();
+    console.log("PROPS", props);
+    console.log("THIS.PROPS", this.props);
     this.state = {
-      note: props.expense ? props.expense.note : "",
       description: props.expense ? props.expense.description : "",
+      note: props.expense ? props.expense.note : "",
       amount: props.expense ? (props.expense.amount / 100).toString() : "",
       createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
       calendarFocused: false,
       error: "",
     };
   }
-
-  onAmountChange = (e) => {
-    const amount = e.target.value;
-    if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
-      this.setState(() => ({ amount }));
-    }
-  };
-  onNoteChange = (e) => {
-    e.persist();
-    this.setState(() => ({ note: e.target.value }));
-  };
   onDescriptionChange = (e) => {
     const description = e.target.value;
     this.setState(() => ({ description }));
+  };
+  onNoteChange = (e) => {
+    const note = e.target.value;
+    this.setState(() => ({ note }));
+  };
+  onAmountChange = (e) => {
+    const amount = e.target.value;
+
+    if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
+      this.setState(() => ({ amount }));
+    }
   };
   onDateChange = (createdAt) => {
     if (createdAt) {
@@ -42,8 +41,11 @@ export default class ExpenseForm extends React.Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
+
     if (!this.state.description || !this.state.amount) {
-      this.setState(() => ({ error: "Please provide description and amount" }));
+      this.setState(() => ({
+        error: "Please provide description and amount.",
+      }));
     } else {
       this.setState(() => ({ error: "" }));
       this.props.onSubmit({

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",
-    "build": "webpack --watch",
+    "build:dev": "webpack",
+    "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "test": "jest --config=jest.config.json"
   },
@@ -43,6 +44,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "mini-css-extract-plugin": "^0.11.2",
     "webpack-cli": "^3.3.12",
     "yarn": "^1.22.5"
   }

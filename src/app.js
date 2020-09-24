@@ -29,9 +29,7 @@ const store = configureStore();
 // }, 2000);
 
 const state = store.getState();
-console.log(state);
 const visible = getVisibilityExpense(state.expenses, state.filters);
-console.log(store);
 
 const jsx = (
   <Provider store={store}>

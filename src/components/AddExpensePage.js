@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addExpense } from "../actions/expenses";
 
 export class AddExpensePage extends React.Component {
-  addExpense = (expense) => {
+  onSubmit = (expense) => {
     this.props.addExpense(expense);
     this.props.history.push("/");
   };
@@ -12,7 +12,7 @@ export class AddExpensePage extends React.Component {
     return (
       <div>
         <h1>Add Expense</h1>
-        <ExpenseForm addExpense={this.addExpense} />
+        <ExpenseForm onSubmit={this.onSubmit} />
       </div>
     );
   }
