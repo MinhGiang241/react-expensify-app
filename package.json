@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "mini-css-extract-plugin": "^0.11.2",
-    "webpack-cli": "^3.3.12",
-    "yarn": "^1.22.5"
+    "webpack-cli": "^3.3.12"
   }
 }
