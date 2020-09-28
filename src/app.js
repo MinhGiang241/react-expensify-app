@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import AppRouter from "./routers/AppRouter";
+import AppRouter, { history } from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
 import { addExpense } from "./actions/expenses";
 import { setTextFilter } from "./actions/filters";
@@ -10,23 +10,9 @@ import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
+import { firebase } from "./firebase/firebase";
 
 const store = configureStore();
-
-// store.dispatch(
-//   addExpense({ description: "Water bill", amount: 4500, createdAt: 10 })
-// );
-// store.dispatch(
-//   addExpense({ description: "Rent", amount: 45000, createdAt: 1000 })
-// );
-// store.dispatch(
-//   addExpense({ description: "Gas bill", amount: 450, createdAt: 100 })
-// );
-// store.dispatch(setTextFilter("water"));
-
-// setTimeout(() => {
-//   store.dispatch(setTextFilter("bill"));
-// }, 2000);
 
 const state = store.getState();
 const visible = getVisibilityExpense(state.expenses, state.filters);
@@ -38,3 +24,13 @@ const jsx = (
 );
 
 ReactDOM.render(jsx, document.getElementById("app"));
+
+// firebase.auth().onAuthStateChanged((user) => {
+//   if (user) {
+
+//     console.log("log in");
+//   } else {
+//     history.push("/");
+//     console.log("log out");
+//   }
+// });
