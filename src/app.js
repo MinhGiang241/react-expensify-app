@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import AppRouter, { history } from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
-import { addExpense } from "./actions/expenses";
-import { setTextFilter } from "./actions/filters";
+import { startSetExpenses, startAddExpense } from "./actions/expenses";
+import { login, logout } from "./actions/auth";
 import getVisibilityExpense from "./selectors/expenses";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
@@ -23,14 +23,34 @@ const jsx = (
   </Provider>
 );
 
-ReactDOM.render(jsx, document.getElementById("app"));
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById("app"));
+    hasRendered = true;
+  }
+};
 
-// firebase.auth().onAuthStateChanged((user) => {
-//   if (user) {
+ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
 
-//     console.log("log in");
-//   } else {
-//     history.push("/");
-//     console.log("log out");
-//   }
-// });
+store.dispatch(startSetExpenses()).then(() => {
+  ReactDOM.render(jsx, document.getElementById("app"));
+});
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(login(user.uid));
+    store.dispatch(startSetExpenses()).then(() => {
+      renderApp();
+      if (history.location.pathname === "/") {
+        history.push("/dashboard");
+      }
+    });
+    console.log("uid", user.uid);
+  } else {
+    store.dispatch(logout());
+    renderApp();
+    history.push("/");
+    console.log("log out");
+  }
+});

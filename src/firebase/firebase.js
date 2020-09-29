@@ -1,8 +1,3 @@
-// importScripts("https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js");
-// importScripts(
-//   "https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"
-// );
-// import * as firebase from "firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/analytics";
